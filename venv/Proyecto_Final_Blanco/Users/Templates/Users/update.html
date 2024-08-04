@@ -1,0 +1,41 @@
+{% extends "Books/base.html" %}
+
+{% block titulo %} PAB - Proyecto Final | Actualizacion de datos {% endblock titulo %}
+
+{% block modelo %} Actualizacion de datos de usuario {% endblock modelo %}
+
+{% block miForm %}
+
+<div class="container py-2">
+    <div class="row">
+        <div class="col-md-4">
+
+            {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    {% if message.tags == 'success' %}
+                        <li class="list-group-item-success">{{ message }}</li>
+                    {% else %}
+                        <li class="list-group-item-danger">{{ message }}</li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+            {% endif %}
+
+        <form method="post">
+            {% csrf_token %}
+
+            {{ miForm.as_table }}
+     
+             <div class="py-2">
+                <a href="{% url 'index' %}" class="btn btn-secondary" role="button" aria-disabled="true">Cancelar</a>
+                 <button type="submit" class="btn btn-success opacity-75">Actualizar</button>
+            </div>
+        </form>
+   </div>
+
+    </div>
+</div>
+
+
+{% endblock miForm %}

@@ -30,10 +30,24 @@
                     <ul class="navbar-nav ms-auto my-2 my-lg-0">
 
                         {% if request.user.is_authenticated %}
+ 
                         <li class="nav-item"><a class="nav-link" href="{% url 'index' %}">Libros</a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'index' %}">Reseñas</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{% url 'index' %}">Mi Perfil</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{% url 'index' %}">Salir</a></li>
+
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-secondary btn-sm">Mi Perfil: {{request.user.username}}</button>
+                            <button type="button" class="btn btn-secondary btn-sm dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+                            <span class="visually-hidden"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                              <li><a class="dropdown-item" href="{% url 'update' %}">Editar datos</a></li>
+                              <li><a class="dropdown-item" href="#">Cambiar Avatar</a></li>
+                              <li><a class="dropdown-item" href="{% url 'updatePass' %}">Cambiar Contraseña</a></li>
+                              <li><hr class="dropdown-divider"></li>
+                              <li><a class="dropdown-item" href="{% url 'logout' %}">Salir</a></li>
+                            </ul>
+                          </div>
+
                         {% else %}
                         <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Ingresar</a></li>
                         <li class="nav-item"><a class="nav-link" href="{% url 'register' %}">Registrarse</a></li>

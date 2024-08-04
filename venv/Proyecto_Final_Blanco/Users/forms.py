@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, UserChangeForm
 
 # Creo mis formularios personalizados que heredan del propio de Django y de Forms
 
@@ -50,5 +50,31 @@ class UserLoginForm(AuthenticationForm, forms.Form):
         }
     ))
     password = forms.PasswordInput(attrs={
-            'class': 'form-control'
+            'class': 'form-control',
         })
+
+class UserUpdateForm(UserChangeForm):
+    email= forms.EmailField(label="Ingrese email", widget=forms.TextInput(
+        attrs={
+            'class': 'form-control',
+            'placeholder': 'username',
+        }
+    ))
+    last_name = forms.CharField(label="Ingrese nombre del usuario", max_length=30, widget=forms.TextInput(
+        attrs={
+            'class': 'form-control',
+            'placeholder': 'nombre del usuario',
+        }
+    ))
+    first_name = forms.CharField(label="Ingrese apellido del usuario", max_length=30, widget=forms.TextInput(
+        attrs={
+            'class': 'form-control',
+            'placeholder': 'apellido del usuario',
+        }
+    ))
+    password = None
+
+    class Meta:
+        model = User
+        fields = ["email","last_name", "first_name"]
+        help_text = {k: "" for k in fields}
