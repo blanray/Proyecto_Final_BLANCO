@@ -84,3 +84,27 @@ def update_user(request):
 class PassUpdate(LoginRequiredMixin, PasswordChangeView):
     template_name='Users/updatePass.html'
     success_url = reverse_lazy('index')
+
+@login_required
+def update_avatar(request):
+    
+    miUser = request.user
+
+    if request.method=='POST':
+        miForm = AvatarUpdateForm(request.POST, request.FILES)
+
+        if miForm.is_valid():
+
+            if miForm.cleaned_data.get('image'):
+                miUser.avatar.image = miForm.cleaned_data.get('image')
+                miUser.avatar.save()
+
+            return redirect(reverse('index'))
+        else:
+            messages.error(request, 'Error actualizando el avatar')
+            miForm = AvatarUpdateForm()
+
+    else:
+        miForm = AvatarUpdateForm()
+
+    return render(request, './Users/updateAvatar.html', {"miForm": miForm})

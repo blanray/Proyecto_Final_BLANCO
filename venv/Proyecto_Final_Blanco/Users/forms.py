@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, UserChangeForm
+from .models import Avatar
 
 # Creo mis formularios personalizados que heredan del propio de Django y de Forms
 
@@ -78,3 +79,11 @@ class UserUpdateForm(UserChangeForm):
         model = User
         fields = ["email","last_name", "first_name"]
         help_text = {k: "" for k in fields}
+
+class AvatarUpdateForm(forms.Form):
+    image = forms.ImageField(label="Ingrese la imagen del avatar", required=False)
+
+    class Meta:
+        model = Avatar
+        fields = ["image"]
+
