@@ -9,6 +9,7 @@ from .forms import *
 
 
 
+
 def register_user(request):
        
     if request.method=='POST':
@@ -96,8 +97,14 @@ def update_avatar(request):
         if miForm.is_valid():
 
             if miForm.cleaned_data.get('image'):
-                miUser.avatar.image = miForm.cleaned_data.get('image')
-                miUser.avatar.save()
+                try:
+                    miUser.avatar.image = miForm.cleaned_data.get('image')
+                    miUser.avatar.save()
+                except Avatar.DoesNotExist:
+                    miAvatar = Avatar(miUser.id, miForm.cleaned_data.get('image'))
+                    miUser.avatar = miAvatar
+                    miUser.avatar.image = miForm.cleaned_data.get('image')
+                    miUser.avatar.save()
 
             return redirect(reverse('index'))
         else:
