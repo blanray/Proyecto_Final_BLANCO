@@ -46,6 +46,12 @@
                             <span class="visually-hidden"></span>
                             </button>
                             <ul class="dropdown-menu">
+                                {% if request.user.is_superuser %}
+
+                                <li><a class="dropdown-item" href="{% url 'index' %}">Administrar usuarios</a></li>
+
+                                {% endif %}    
+
                               <li><a class="dropdown-item" href="{% url 'update' %}#update">Editar datos</a></li>
                               <li><a class="dropdown-item" href="{% url 'updateAvatar' %}#updateAvatar">Actualizar Avatar</a></li>
                               <li><a class="dropdown-item" href="{% url 'updatePass' %}#updatePass">Cambiar Contraseña</a></li>
@@ -97,5 +103,28 @@
         <!-- Core theme JS-->
         <script src="{% static 'Books/js/scripts.js' %}"></script>
         <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+        {% block mensajes %}
+
+        {% if messages %}
+
+            {% for message in messages %}
+                <script>
+                    Swal.fire({
+                        position: "top-end",
+                        icon: "info",
+                        title: "{{message}}",
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                </script>
+            {% endfor %}
+
+        {% endif %}
+
+
+        {% endblock mensajes %}
+
     </body>
 </html>

@@ -17,6 +17,7 @@ def register_user(request):
 
         if miForm.is_valid():
             miForm.save()
+            messages.success(request, 'Usuario registrdo correctamente')
             return redirect(reverse('index'))
         else:
              messages.error(request, 'Error registrando el usuario')
@@ -41,6 +42,7 @@ def login_user(request):
 
             if user is not None:
                 login(request, user)
+                messages.success(request, 'Sesion iniciada correctamente')
                 return redirect(reverse('index'))
             else:
                 messages.error(request, 'Error iniciando sesion')
@@ -59,7 +61,7 @@ def login_user(request):
 @login_required
 def logout_user(request):
     logout(request)
-
+    messages.success(request, 'Sesion cerrada')
     return redirect(reverse('index'))
 
 @login_required
@@ -72,6 +74,7 @@ def update_user(request):
 
         if miForm.is_valid():
             miForm.save()
+            messages.success(request, 'Usuario actualizado correctamente')
             return redirect(reverse('index'))
         else:
             messages.error(request, 'Error actualizando el usuario')
@@ -105,7 +108,7 @@ def update_avatar(request):
                     miUser.avatar = miAvatar
                     miUser.avatar.image = miForm.cleaned_data.get('image')
                     miUser.avatar.save()
-
+            messages.success(request, 'Avatar actualizado correctamente')
             return redirect(reverse('index'))
         else:
             messages.error(request, 'Error actualizando el avatar')
