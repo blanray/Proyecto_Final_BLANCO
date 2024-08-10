@@ -9,4 +9,7 @@ urlpatterns = [
     path('update/', views.update_user, name = 'update'),
     path('updateAvatar/', views.update_avatar, name = 'updateAvatar'),
     path('passUpdate/', views.PassUpdate.as_view(), name = 'updatePass'),
+    path('adminUsers/', views.admin_users, name = 'adminUsers'),
+    path('delete/<userId>/', views.delete, name = 'delete'),
+
 ]

@@ -1,0 +1,82 @@
+{% extends "Books/base.html" %}
+
+{% block titulo %} PAB - Proyecto Final | Administracion de usuarios {% endblock titulo %}
+
+{% block modelo %} Administrar usuarios {% endblock modelo %}
+
+{% block miForm %}
+
+<section id="adminUsers">
+<div class="container py-2">
+    <div class="row">
+        <div class="col-md-6">
+
+            {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    {% if message.tags == 'success' %}
+                        <li class="list-group-item-success">{{ message }}</li>
+                    {% else %}
+                        <li class="list-group-item-danger">{{ message }}</li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+            {% endif %}
+
+            <div class="col-md-12">
+                <div class="col-xs-12 col-sm-12 col-md-12">
+                    <table class="table table-striped table-bordered">
+                        <thead>
+                            <tr>
+                                <th scope="col">Username</th>
+                                <th scope="col">Nombre</th>
+                                <th scope="col">Apellido</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Superusuario</th>
+                                <th scope="col"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% if usuarios %}
+                            {% for usuario in usuarios %}
+                            <tr>
+                                <td hidden>{{usuario.id}}</td>
+                                <td>{{usuario.username}}</td>
+                                <td>{{usuario.first_name}}</td>
+                                <td>{{usuario.last_name}}</td>
+                                <td>{{usuario.email}}</td>
+                                <td>{{usuario.is_superuser}}</td>
+
+                                {% if usuario.username != request.user.username %}
+                                <td>
+                                    <a class="btn btn-danger opacity-75 btn-sm" role="button" aria-disabled="true" href=" {% url 'delete' usuario.id %}">Eliminar</a>
+                                </td>
+                                {% else %}
+                                <td>
+                                    <a class="btn btn-danger opacity-25 btn-sm disabled" role="button" aria-disabled="true" href=" {% url 'delete' usuario.id %}">Eliminar</a>
+                                </td>
+                                {% endif %}
+                            </tr>
+                            {% endfor %}
+                        {% else %}
+                            <tr>
+                                <th scope="row"></th>
+                                <td>No hay registros para mostrar</td>
+                            </tr>
+                        {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+    
+
+
+
+
+        </div>
+
+    </div>
+</div>
+</section>
+
+{% endblock miForm %}

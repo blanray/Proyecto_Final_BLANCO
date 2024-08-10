@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.urls import reverse, reverse_lazy
-from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth import login, logout, authenticate, get_user_model
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.views import PasswordChangeView
@@ -89,6 +89,7 @@ class PassUpdate(LoginRequiredMixin, PasswordChangeView):
     template_name='Users/updatePass.html'
     success_url = reverse_lazy('index')
 
+
 @login_required
 def update_avatar(request):
     
@@ -118,3 +119,25 @@ def update_avatar(request):
         miForm = AvatarUpdateForm()
 
     return render(request, './Users/updateAvatar.html', {"miForm": miForm})
+
+@login_required
+def admin_users(request):
+
+    User = get_user_model()
+    usuarios = User.objects.all()
+    return render(request, './Users/adminUsers.html', {"usuarios": usuarios})
+
+@login_required
+def delete(request, userId):
+
+    if request.user.is_superuser:
+        try:
+            user = User.objects.get(id=userId)
+            user.delete()
+            messages.success(request, 'Usuario eliminado exitosamente')
+        except:
+            pass
+    else:
+        messages.error(request, "No tiene permisos para eliminar usuarios")
+
+    return redirect(reverse('index'))
