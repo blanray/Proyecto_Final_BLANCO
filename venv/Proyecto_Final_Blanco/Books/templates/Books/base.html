@@ -19,6 +19,8 @@
         <link href="https://cdnjs.cloudflare.com/ajax/libs/SimpleLightbox/2.1.0/simpleLightbox.min.css" rel="stylesheet" />
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="{% static 'Books/css/styles.css' %}" rel="stylesheet" />
+        <link href="{% static 'Books/css/styleBooks.css' %}" rel="stylesheet" />
+
     </head>
     <body id="page-top">
         <!-- Navigation-->
@@ -31,8 +33,8 @@
 
                         {% if request.user.is_authenticated %}
  
-                        <li class="nav-item"><a class="nav-link" href="{% url 'index' %}">Libros</a></li>
-                        <li class="nav-item"><a class="nav-link" href="{% url 'index' %}">Reseñas</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'books' %}#books">Libros</a></li>
+                        <li class="nav-item"><a class="nav-link" href="{% url 'index' %}">Valoraciones</a></li>
 
                         <div class="btn-group">
                             {% if request.user.avatar %}

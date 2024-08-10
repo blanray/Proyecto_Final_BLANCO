@@ -1,0 +1,60 @@
+{% extends "Books/base.html" %}
+
+{% block titulo %} PAB - Proyecto Final | Libros {% endblock titulo %}
+
+{% block modelo %} Administrar libros {% endblock modelo %}
+
+{% block miForm %}
+
+<section id="books">
+  <div class="container py-2">
+
+    {% if messages %}
+    <ul class="messages">
+      {% for message in messages %}
+      {% if message.tags == 'success' %}
+      <li class="list-group-item-success">{{ message }}</li>
+      {% else %}
+      <li class="list-group-item-danger">{{ message }}</li>
+      {% endif %}
+      {% endfor %}
+    </ul>
+    {% endif %}
+
+
+    {% if books %}
+
+
+    <div class="books">
+
+      {% for book in books %}
+
+      <div class="card col-md-4 col-sm-12" style="width: 16rem;">
+        <img src="{{book.image.url}}" class="card-img-top" alt="{{book.name}}">
+        <div class="card-body">
+          <h5 class="card-title">{{book.name}}</h5>
+          <p class="card-text">{{book.author}}</p>
+          <a href=" {% url 'bookDetail' book.id %}#bookDetail" class="btn btn-primary">Detalles</a>
+        </div>
+      </div>
+
+      {% endfor %}
+
+      {% else %}
+
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Lista de libros</h5>
+          <p class="card-text">No hay libros en la lista</p>
+        </div>
+      </div>
+
+      {% endif %}
+
+    </div>
+
+
+  </div>
+</section>
+
+{% endblock miForm %}

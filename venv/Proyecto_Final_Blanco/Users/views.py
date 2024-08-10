@@ -8,8 +8,6 @@ from django.contrib.auth.views import PasswordChangeView
 from .forms import *
 
 
-
-
 def register_user(request):
        
     if request.method=='POST':
@@ -89,7 +87,6 @@ class PassUpdate(LoginRequiredMixin, PasswordChangeView):
     template_name='Users/updatePass.html'
     success_url = reverse_lazy('index')
 
-
 @login_required
 def update_avatar(request):
     
@@ -123,9 +120,13 @@ def update_avatar(request):
 @login_required
 def admin_users(request):
 
-    User = get_user_model()
-    usuarios = User.objects.all()
-    return render(request, './Users/adminUsers.html', {"usuarios": usuarios})
+    if request.user.is_superuser:
+        User = get_user_model()
+        usuarios = User.objects.all()
+        return render(request, './Users/adminUsers.html', {"usuarios": usuarios})
+    else:
+        messages.error(request, "No tiene permisos para editar usuarios")
+        return redirect(reverse('index'))
 
 @login_required
 def delete(request, userId):
