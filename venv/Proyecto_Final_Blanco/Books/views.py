@@ -5,6 +5,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse
 from .models import *
 from .forms import *
+from datetime import datetime
 
 def inicio(request):
 
@@ -128,7 +129,7 @@ def reviewDelete(request, pk):
 
     miReviewTemp = Review.objects.get(id = pk)
 
-    if request.user == miReviewTemp.user:
+    if (request.user == miReviewTemp.user) or (request.user.is_superuser):
         try:
             miReviewTemp.delete()
             messages.success(request, 'Comentario eliminado exitosamente')
@@ -138,3 +139,31 @@ def reviewDelete(request, pk):
         messages.error(request, "No tiene permisos para eliminar valoraciones de otro usuario")
 
     return redirect(reverse('books'))
+
+@login_required
+def reviewEdit(request, pk):
+
+    miReviewTemp = Review.objects.get(id = pk)
+
+    if (request.user == miReviewTemp.user):
+        
+        if request.method=='POST':
+            miForm = ReviewForm(request.POST)
+
+            if miForm.is_valid():
+                miReviewTemp.created = datetime.now()
+                miFormTemp = ReviewForm(request.POST, instance = miReviewTemp)
+                miFormTemp.save()
+                messages.success(request, 'Valoracion actualizada correctamente')
+                return redirect(reverse('books'))
+            else:
+                messages.error(request, 'Error registrando la valoracion')
+                miForm = ReviewForm(instance = miReviewTemp)
+
+        else:
+            miForm = ReviewForm(instance = miReviewTemp)
+
+        return render(request, 'Books/reviewEdit.html', {'miForm': miForm, 'review': miReviewTemp})
+    else:
+        messages.error(request, "No tiene permisos para acceder a esa pagina")
+        return redirect(reverse('index'))

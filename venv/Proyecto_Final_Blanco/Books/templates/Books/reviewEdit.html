@@ -1,0 +1,51 @@
+{% extends "Books/base.html" %}
+
+{% block titulo %} PAB - Proyecto Final | Editar Valoracion {% endblock titulo %}
+
+{% block modelo %} Editar mis valoraciones {% endblock modelo %}
+
+{% block miForm %}
+
+<section id="reviewEdit">
+  <div class="container py-2">
+
+    {% if messages %}
+    <ul class="messages">
+      {% for message in messages %}
+      {% if message.tags == 'success' %}
+      <li class="list-group-item-success">{{ message }}</li>
+      {% else %}
+      <li class="list-group-item-danger">{{ message }}</li>
+      {% endif %}
+      {% endfor %}
+    </ul>
+    {% endif %}
+
+    {% if review %}
+
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+
+      {{ miForm.as_div }}
+
+      <div class="py-2">
+        <a href="{% url 'books' %}#books" class="btn btn-secondary" role="button" aria-disabled="true">Cancelar</a>
+        <button type="submit" class="btn btn-success opacity-75">Actualizar</button>
+      </div>
+ </form>
+
+    {% else %}
+
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">ERROR</h5>
+        <p class="card-text">No hay detalle</p>
+      </div>
+    </div>
+
+    {% endif %}
+
+  </div>
+</section>
+
+{% endblock miForm %}
