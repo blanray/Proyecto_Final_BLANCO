@@ -14,4 +14,12 @@ books = [
     path('bookInsert', views.bookInsert, name = 'bookInsert'),
 ]
 
+reviews = [
+    path('reviewInsert/<bookId>', views.reviewInsert, name = 'reviewInsert'),
+]
+
+
 urlpatterns += books
+
+urlpatterns += reviews
+

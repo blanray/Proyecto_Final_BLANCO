@@ -9,10 +9,10 @@ class Book(models.Model):
     image = models.ImageField(upload_to='portadas', null=True, blank=True)
 
     def __str__(self):
-        return f'Book | Id: {self.id} - Nombre: {self.name} - Descripcion: {self.description} - Autor: {self.author}'
+        return f'Book | Id: {self.id} - Nombre: {self.name} - Autor: {self.author}'
 
 
-class Comentario(models.Model):
+class Review(models.Model):
     id = models.AutoField(primary_key=True, auto_created=True)
     comment = models.TextField(max_length=150, null=False, blank=False)
     book = models.ForeignKey(Book, on_delete=models.CASCADE)
@@ -21,5 +21,5 @@ class Comentario(models.Model):
     created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f'Comentario | Id: {self.id} - Comentario: {self.comment} - Creado por: {self.user} - Libro: {self.book} - Rating: {self.rating} - Fecha: {self.created}'
+        return f'Review | Id: {self.id} - Detalle: {self.comment} - Creado por: {self.user} - Libro: {self.book} - Rating: {self.rating} - Fecha: {self.created}'
 

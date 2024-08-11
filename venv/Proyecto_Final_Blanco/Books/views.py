@@ -26,8 +26,8 @@ def books(request):
 @login_required
 def bookDetail(request, idBook):
     book = Book.objects.get(id=idBook)
-
-    return render(request, 'Books/bookDetail.html', {'book': book})
+    valoraciones = Review.objects.filter(book__id = idBook)
+    return render(request, 'Books/bookDetail.html', {'book': book, 'cantidadValoraciones': len(valoraciones)})
 
 @login_required
 def bookInsert(request):
@@ -96,3 +96,28 @@ def bookDelete(request, pk):
         messages.error(request, "No tiene permisos para eliminar libros")
 
     return redirect(reverse('books'))
+
+@login_required
+def reviewInsert(request, bookId):
+
+    if request.method=='POST':
+        miForm = ReviewForm(request.POST)
+
+        if miForm.is_valid():
+            miFormTemp = ReviewForm(request.POST)
+            reviewTemp = miFormTemp.save(commit=False)
+            reviewTemp.user = request.user
+            bookTemp = Book.objects.get(id = bookId)
+            reviewTemp.book = bookTemp
+            reviewTemp.save()
+  
+            messages.success(request, 'Valoración registrada correctamente')
+            return redirect(reverse('books'))
+        else:
+            messages.error(request, 'Error registrando la valoración')
+            miForm = ReviewForm()
+
+    else:
+        miForm = ReviewForm()
+
+    return render(request, 'Books/reviewInsert.html', {'miForm': miForm})

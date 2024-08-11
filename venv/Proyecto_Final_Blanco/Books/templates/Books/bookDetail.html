@@ -34,7 +34,7 @@
             <h3 class="card-title">{{book.name}}</h3>
             <h5 class="card-title">{{book.author}}</h5>
             <p class="card-text text-center">{{book.description}}</p>
-            <p class="card-text"><small class="text-muted">Cantidad de valoraciones: </small></p>
+            <p class="card-text"><small class="text-muted">Cantidad de valoraciones: {{cantidadValoraciones}}</small></p>
 
             {% if request.user.is_superuser %}
 
@@ -43,7 +43,7 @@
 
             {% endif %}
 
-            <a class="btn btn-success btn-sm" role="button" aria-disabled="true" href=" {% url 'index' %}">Valorar</a>
+            <a class="btn btn-success btn-sm" role="button" aria-disabled="true" href=" {% url 'reviewInsert' book.id %}#reviewInsert">Valorar</a>
             <a class="btn btn-secondary btn-sm" role="button" aria-disabled="true" href=" {% url 'books' %}#books">Volver</a>
           </div>
         </div>
