@@ -32,21 +32,67 @@ def bookDetail(request, idBook):
 @login_required
 def bookInsert(request):
 
-    if request.method=='POST':
-        miForm = BookForm(request.POST, request.FILES)
+    if request.user.is_superuser:
+        
+        if request.method=='POST':
+            miForm = BookForm(request.POST, request.FILES)
 
-        if miForm.is_valid():
-            miFormTemp = BookForm(request.POST, request.FILES)
-            bookTemp = miFormTemp.save(commit=False)
-            bookTemp.save()
-            messages.success(request, 'Libro registrdo correctamente')
-            return redirect(reverse('books'))
+            if miForm.is_valid():
+                miFormTemp = BookForm(request.POST, request.FILES)
+                bookTemp = miFormTemp.save(commit=False)
+                bookTemp.save()
+                messages.success(request, 'Libro registrdo correctamente')
+                return redirect(reverse('books'))
+            else:
+                messages.error(request, 'Error registrando el libro')
+                miForm = BookForm()
+
         else:
-             messages.error(request, 'Error registrando el libro')
-             miForm = BookForm()
+            miForm = BookForm()
 
+        return render(request, 'Books/bookInsert.html', {'miForm': miForm})
     else:
-        miForm = BookForm()
+        messages.error(request, "No tiene permisos para acceder a esa pagina")
+        return redirect(reverse('index'))
 
-    return render(request, 'Books/bookInsert.html', {'miForm': miForm})
+@login_required
+def bookEdit(request, pk):
 
+    if request.user.is_superuser:
+        
+        if request.method=='POST':
+            miForm = BookForm(request.POST, request.FILES)
+
+            if miForm.is_valid():
+                bookTemp = Book.objects.get(id=pk)
+                miFormTemp = BookForm(request.POST, request.FILES, instance = bookTemp)
+                miFormTemp.save()
+                messages.success(request, 'Libro actualizado correctamente')
+                return redirect(reverse('books'))
+            else:
+                messages.error(request, 'Error registrando el libro')
+                miForm = BookForm()
+
+        else:
+            bookTemp = Book.objects.get(id=pk)
+            miForm = BookForm(instance = bookTemp)
+
+        return render(request, 'Books/bookEdit.html', {'miForm': miForm, 'book': bookTemp})
+    else:
+        messages.error(request, "No tiene permisos para acceder a esa pagina")
+        return redirect(reverse('index'))
+
+@login_required
+def bookDelete(request, pk):
+
+    if request.user.is_superuser:
+        try:
+            book = Book.objects.get(id=pk)
+            book.delete()
+            messages.success(request, 'Libro eliminado exitosamente')
+        except:
+            pass
+    else:
+        messages.error(request, "No tiene permisos para eliminar libros")
+
+    return redirect(reverse('books'))

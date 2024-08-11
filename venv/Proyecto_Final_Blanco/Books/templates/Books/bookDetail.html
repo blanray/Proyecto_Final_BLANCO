@@ -38,12 +38,13 @@
 
             {% if request.user.is_superuser %}
 
-            <a class="btn btn-danger btn-sm" role="button" aria-disabled="true" href=" {% url 'index' %}">Eliminar</a>
-            <a class="btn btn-warning btn-sm" role="button" aria-disabled="true" href=" {% url 'index' %}">Editar</a>
+            <a class="btn btn-danger btn-sm" role="button" aria-disabled="true" href=" {% url 'bookDelete' book.id %}">Eliminar</a>
+            <a class="btn btn-warning btn-sm" role="button" aria-disabled="true" href=" {% url 'bookEdit' book.id %}#bookEdit">Editar</a>
 
             {% endif %}
 
             <a class="btn btn-success btn-sm" role="button" aria-disabled="true" href=" {% url 'index' %}">Valorar</a>
+            <a class="btn btn-secondary btn-sm" role="button" aria-disabled="true" href=" {% url 'books' %}#books">Volver</a>
           </div>
         </div>
       </div>
