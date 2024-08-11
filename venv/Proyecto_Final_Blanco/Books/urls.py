@@ -16,6 +16,7 @@ books = [
 
 reviews = [
     path('reviewInsert/<bookId>', views.reviewInsert, name = 'reviewInsert'),
+    path('reviewDelete/<pk>', views.reviewDelete, name = 'reviewDelete'),
 ]
 
 

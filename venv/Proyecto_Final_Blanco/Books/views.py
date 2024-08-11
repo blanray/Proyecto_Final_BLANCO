@@ -27,7 +27,8 @@ def books(request):
 def bookDetail(request, idBook):
     book = Book.objects.get(id=idBook)
     valoraciones = Review.objects.filter(book__id = idBook)
-    return render(request, 'Books/bookDetail.html', {'book': book, 'cantidadValoraciones': len(valoraciones)})
+
+    return render(request, 'Books/bookDetail.html', {'book': book, 'cantidadValoraciones': len(valoraciones), 'reviews': valoraciones})
 
 @login_required
 def bookInsert(request):
@@ -121,3 +122,19 @@ def reviewInsert(request, bookId):
         miForm = ReviewForm()
 
     return render(request, 'Books/reviewInsert.html', {'miForm': miForm})
+
+@login_required
+def reviewDelete(request, pk):
+
+    miReviewTemp = Review.objects.get(id = pk)
+
+    if request.user == miReviewTemp.user:
+        try:
+            miReviewTemp.delete()
+            messages.success(request, 'Comentario eliminado exitosamente')
+        except:
+            pass
+    else:
+        messages.error(request, "No tiene permisos para eliminar valoraciones de otro usuario")
+
+    return redirect(reverse('books'))
