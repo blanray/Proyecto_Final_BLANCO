@@ -20,6 +20,13 @@
       {% endfor %}
     </ul>
     {% endif %}
+    
+    
+    {% if request.user.is_superuser %}
+
+    <a href=" {% url 'bookInsert' %}#bookInsert" class="btn btn-success">Alta de Libro</a>
+
+    {% endif %}
 
 
     {% if books %}

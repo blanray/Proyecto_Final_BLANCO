@@ -25,10 +25,28 @@ def books(request):
 
 @login_required
 def bookDetail(request, idBook):
-
-    print(f"Busco id {idBook}")
     book = Book.objects.get(id=idBook)
 
-    print(book)
-
     return render(request, 'Books/bookDetail.html', {'book': book})
+
+@login_required
+def bookInsert(request):
+
+    if request.method=='POST':
+        miForm = BookForm(request.POST, request.FILES)
+
+        if miForm.is_valid():
+            miFormTemp = BookForm(request.POST, request.FILES)
+            bookTemp = miFormTemp.save(commit=False)
+            bookTemp.save()
+            messages.success(request, 'Libro registrdo correctamente')
+            return redirect(reverse('books'))
+        else:
+             messages.error(request, 'Error registrando el libro')
+             miForm = BookForm()
+
+    else:
+        miForm = BookForm()
+
+    return render(request, 'Books/bookInsert.html', {'miForm': miForm})
+

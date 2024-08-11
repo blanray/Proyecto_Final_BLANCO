@@ -1,8 +1,9 @@
-from django import forms
+from django.forms import ModelForm
 from django.contrib.auth.models import User
 from .models import *
 
-class BookForm(forms.Form):
+class BookForm(ModelForm):
     class Meta:
         model = Book
-        exclude = ["id"]
+        fields = ["name", "author", "description", "image"]
+        help_text = {k: "" for k in fields}

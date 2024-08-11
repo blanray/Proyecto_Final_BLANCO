@@ -1,0 +1,40 @@
+{% extends "Books/base.html" %}
+
+{% block titulo %} PAB - Proyecto Final | Alta de Libro {% endblock titulo %}
+
+{% block modelo %} Alta de libro {% endblock modelo %}
+
+{% block miForm %}
+
+<section id="bookInsert">
+  <div class="container py-2">
+
+    {% if messages %}
+    <ul class="messages">
+      {% for message in messages %}
+      {% if message.tags == 'success' %}
+      <li class="list-group-item-success">{{ message }}</li>
+      {% else %}
+      <li class="list-group-item-danger">{{ message }}</li>
+      {% endif %}
+      {% endfor %}
+    </ul>
+    {% endif %}
+
+
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+
+      {{ miForm.as_div }}
+
+      <div class="py-2">
+        <a href="{% url 'books' %}#books" class="btn btn-secondary" role="button" aria-disabled="true">Cancelar</a>
+        <button type="submit" class="btn btn-success opacity-75">Ingresar</button>
+      </div>
+ </form>
+
+
+  </div>
+</section>
+
+{% endblock miForm %}

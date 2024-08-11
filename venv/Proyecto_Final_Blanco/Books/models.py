@@ -9,7 +9,7 @@ class Book(models.Model):
     image = models.ImageField(upload_to='portadas', null=True, blank=True)
 
     def __str__(self):
-        return f'Book | Id: {self.id} - Nombre: {self.name} - Autor: {self.author}'
+        return f'Book | Id: {self.id} - Nombre: {self.name} - Descripcion: {self.description} - Autor: {self.author}'
 
 
 class Comentario(models.Model):

@@ -9,6 +9,7 @@ urlpatterns = [
 books = [
     path('books', views.books, name = 'books'),
     path('bookDetail/<idBook>', views.bookDetail, name = 'bookDetail'),
+    path('bookInsert', views.bookInsert, name = 'bookInsert'),
 ]
 
 urlpatterns += books
