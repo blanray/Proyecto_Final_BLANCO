@@ -98,15 +98,17 @@ def update_avatar(request):
         if miForm.is_valid():
 
             if miForm.cleaned_data.get('image'):
-                try:
-                    miUser.avatar.image = miForm.cleaned_data.get('image')
-                    miUser.avatar.save()
-                except Avatar.DoesNotExist:
-                    miAvatar = Avatar(miUser.id, miForm.cleaned_data.get('image'))
-                    miUser.avatar = miAvatar
-                    miUser.avatar.image = miForm.cleaned_data.get('image')
-                    miUser.avatar.save()
-            messages.success(request, 'Avatar actualizado correctamente')
+                    try:
+                        miUser.avatar.image = miForm.cleaned_data.get('image')
+                        miUser.avatar.save()
+                    except Avatar.DoesNotExist:
+                        miAvatar = Avatar(miUser.id, miForm.cleaned_data.get('image'))
+                        miUser.avatar = miAvatar
+                        miUser.avatar.image = miForm.cleaned_data.get('image')
+                        miUser.avatar.save()
+                    
+                    messages.success(request, 'Avatar actualizado correctamente')
+
             return redirect(reverse('index'))
         else:
             messages.error(request, 'Error actualizando el avatar')

@@ -6,6 +6,12 @@ from django.urls import reverse
 from .models import *
 from .forms import *
 from datetime import datetime
+from django.template.defaulttags import register
+
+@register.filter
+def get_range(value):
+    return range(value)
+
 
 def inicio(request):
 

@@ -45,8 +45,11 @@
                                 <td>{{usuario.first_name}}</td>
                                 <td>{{usuario.last_name}}</td>
                                 <td>{{usuario.email}}</td>
-                                <td>{{usuario.is_superuser}}</td>
-
+                                {% if usuario.is_superuser %}
+                                <td><i class="fa-solid fa-circle-check"></i></td>
+                                {% else %}
+                                <td><i class="fa-regular fa-circle-xmark"></i></td>
+                                {% endif %}
                                 {% if usuario.username != request.user.username %}
                                 <td>
                                     <a class="btn btn-danger opacity-75 btn-sm" role="button" aria-disabled="true" href=" {% url 'delete' usuario.id %}">Eliminar</a>

@@ -57,7 +57,17 @@
 
       <div class="card">
         <div class="card-header">
-          {{r.created}}
+          {{r.created}} - Valoracion: 
+
+          {% for i in 5|get_range %}
+            {% if r.rating > i %}
+            <i class="fa-solid fa-star"></i>
+
+            {% else %}
+            <i class="fa-regular fa-star"></i>
+
+            {% endif %}
+          {% endfor %} 
         </div>
         <div class="card-body">
           <blockquote class="blockquote mb-0">

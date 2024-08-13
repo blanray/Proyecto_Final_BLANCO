@@ -81,7 +81,7 @@ class UserUpdateForm(UserChangeForm):
         help_text = {k: "" for k in fields}
 
 class AvatarUpdateForm(forms.Form):
-    image = forms.ImageField(label="Ingrese la imagen del avatar", required=False)
+    image = forms.ImageField(label="Ingrese la imagen del avatar", required=True)
 
     class Meta:
         model = Avatar
