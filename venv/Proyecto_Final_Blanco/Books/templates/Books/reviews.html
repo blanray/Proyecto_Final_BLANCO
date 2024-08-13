@@ -1,0 +1,79 @@
+{% extends "Books/base.html" %}
+
+{% block titulo %} PAB - Proyecto Final | Valoraciones {% endblock titulo %}
+
+{% block modelo %} Ver valoraciones {% endblock modelo %}
+
+{% block miForm %}
+
+<section id="reviews">
+  <div class="container py-2">
+
+    {% if messages %}
+    <ul class="messages">
+      {% for message in messages %}
+      {% if message.tags == 'success' %}
+      <li class="list-group-item-success">{{ message }}</li>
+      {% else %}
+      <li class="list-group-item-danger">{{ message }}</li>
+      {% endif %}
+      {% endfor %}
+    </ul>
+    {% endif %}
+    
+    
+    {% if reviews %}
+
+<div class="container">
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+
+      {{ miForm.as_div}}
+
+      <div class="py-2">
+        <button type="submit" class="btn btn-dark opacity-75">Aplicar</button>
+      </div>
+    </form>
+  </div>
+
+
+    <div class="books">
+
+      {% for review in reviews %}
+
+      <div class="card border-dark mb-3" style="max-width: 18rem;">
+        <div class="card-header">{{review.book.name}}</div>
+        <div class="card-body">
+          <h5 class="card-title">"{{review.comment}}"</h5>
+          <p class="card-text">Por: {{review.user.username}}, con fecha: {{review.created}}</p>
+          <p class="card-text">Valoracion: {{review.rating}} / 5</p>
+        
+        {% if request.user == review.user %}
+        <a class="btn btn-danger btn-sm" role="button" aria-disabled="true" href=" {% url 'reviewDelete' review.id %}"><i class="fa-regular fa-trash-can"></i></a>
+        <a class="btn btn-warning btn-sm" role="button" aria-disabled="true" href=" {% url 'reviewEdit' review.id %}#reviewEdit"><i class="fa-solid fa-pencil"></i></a>
+        {% elif request.user.is_superuser %}
+        <a class="btn btn-danger btn-sm" role="button" aria-disabled="true" href=" {% url 'reviewDelete' review.id %}"><i class="fa-regular fa-trash-can"></i></a>
+        {% endif %}
+        </div>
+      </div>
+
+      {% endfor %}
+
+      {% else %}
+
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Lista de valoraciones</h5>
+          <p class="card-text">No hay valoraciones todavia</p>
+        </div>
+      </div>
+
+      {% endif %}
+
+    </div>
+
+
+  </div>
+</section>
+
+{% endblock miForm %}

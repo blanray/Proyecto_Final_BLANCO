@@ -15,3 +15,17 @@ class ReviewForm(ModelForm):
         model = Review
         fields = ["comment", "rating"]
         help_text = {k: "" for k in fields}
+
+class ReviewMenu(forms.Form):
+    ordenar=[('Antiguas','Mas antiguas primero'), ('Nuevas', 'Mas recientes primero')]
+
+    filtro= [('Todas', 'Todas las valoraciones'), ('Mias', 'Solo mis valoraciones')]
+
+    order = forms.ChoiceField(choices=ordenar, label="Ordenada por")
+
+    filter = forms.ChoiceField(choices=filtro, label="Mostrar")
+
+    class Meta:
+        model = Review
+        fields = ["order", "filter"]
+        help_text = {k: "" for k in fields}

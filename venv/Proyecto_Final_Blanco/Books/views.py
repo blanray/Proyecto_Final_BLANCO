@@ -167,3 +167,25 @@ def reviewEdit(request, pk):
     else:
         messages.error(request, "No tiene permisos para acceder a esa pagina")
         return redirect(reverse('index'))
+
+@login_required
+def reviews(request):
+
+    if request.method == 'POST':
+        miOrden = request.POST.get('order', 'Nuevas')
+        miFiltro = request.POST.get('filter', 'Todas')
+    
+        if miOrden == 'Nuevas':
+            reviews = Review.objects.all().order_by('-created')
+        else:
+            reviews = Review.objects.all().order_by('created')
+
+        if miFiltro == 'Mias':
+            reviews = Review.objects.all().filter(user = request.user)
+
+        miForm = ReviewMenu(request.POST)    
+    else:
+        reviews = Review.objects.all()
+        miForm = ReviewMenu() 
+    
+    return render(request, 'Books/reviews.html', {'reviews': reviews, 'miForm': miForm})
