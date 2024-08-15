@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.core.validators import MaxValueValidator, MinValueValidator 
 
 class Book(models.Model):
     id = models.AutoField(primary_key=True, auto_created=True)
@@ -17,7 +18,7 @@ class Review(models.Model):
     comment = models.TextField(max_length=150, null=False, blank=False)
     book = models.ForeignKey(Book, on_delete=models.CASCADE)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    rating = models.IntegerField(null=False, blank=False)
+    rating = models.IntegerField(default=5, choices=((i,i) for i in range(0, 6)))
     created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
