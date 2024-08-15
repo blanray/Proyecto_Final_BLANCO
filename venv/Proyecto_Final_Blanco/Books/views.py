@@ -93,17 +93,24 @@ def bookEdit(request, pk):
 @login_required
 def bookDelete(request, pk):
 
-    if request.user.is_superuser:
-        try:
-            book = Book.objects.get(id=pk)
-            book.delete()
-            messages.success(request, 'Libro eliminado exitosamente')
-        except:
-            pass
-    else:
-        messages.error(request, "No tiene permisos para eliminar libros")
+    book = Book.objects.get(id=pk)
+ 
+    if request.method == 'POST':
 
-    return redirect(reverse('books'))
+        if request.user.is_superuser:
+            try:
+                book.delete()
+                messages.success(request, 'Libro eliminado exitosamente')
+            except:
+                pass
+        else:
+            messages.error(request, "No tiene permisos para eliminar libros")
+
+        return redirect(reverse('books'))
+
+    else:
+
+        return render(request, 'Books/confirmDelete.html')
 
 @login_required
 def reviewInsert(request, bookId):
@@ -135,16 +142,21 @@ def reviewDelete(request, pk):
 
     miReviewTemp = Review.objects.get(id = pk)
 
-    if (request.user == miReviewTemp.user) or (request.user.is_superuser):
-        try:
-            miReviewTemp.delete()
-            messages.success(request, 'Comentario eliminado exitosamente')
-        except:
-            pass
-    else:
-        messages.error(request, "No tiene permisos para eliminar valoraciones de otro usuario")
+    if request.method == 'POST':
 
-    return redirect(reverse('books'))
+        if (request.user == miReviewTemp.user) or (request.user.is_superuser):
+            try:
+                miReviewTemp.delete()
+                messages.success(request, 'Comentario eliminado exitosamente')
+            except:
+                pass
+        else:
+            messages.error(request, "No tiene permisos para eliminar valoraciones de otro usuario")
+
+        return redirect(reverse('books'))        
+    else:
+        return render(request, 'Books/confirmDelete.html')
+
 
 @login_required
 def reviewEdit(request, pk):

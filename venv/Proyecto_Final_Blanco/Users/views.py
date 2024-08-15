@@ -133,14 +133,18 @@ def admin_users(request):
 @login_required
 def delete(request, userId):
 
-    if request.user.is_superuser:
-        try:
-            user = User.objects.get(id=userId)
-            user.delete()
-            messages.success(request, 'Usuario eliminado exitosamente')
-        except:
-            pass
-    else:
-        messages.error(request, "No tiene permisos para eliminar usuarios")
+    if request.method == 'POST':
+        
+        if request.user.is_superuser:
+            try:
+                user = User.objects.get(id=userId)
+                user.delete()
+                messages.success(request, 'Usuario eliminado exitosamente')
+            except:
+                pass
+        else:
+            messages.error(request, "No tiene permisos para eliminar usuarios")
 
-    return redirect(reverse('index'))
+        return redirect(reverse('index'))
+    else:
+        return render(request, 'Books/confirmDelete.html')
