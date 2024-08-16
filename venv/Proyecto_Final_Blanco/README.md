@@ -9,6 +9,9 @@ Proyecto Final Pablo Blanco
         b) La otra clase es de VALORACIONES (clase Review) que contiene el usuario que la creo, en que fecha, el comentario acerca del libro y una puntuacion entre 0 y 5 para otorgarle. En este caso, el usuario puede editar y borrar sus propios post, mientras que el administrador puede editar los suyos y borrar (solo borrar, no editar) el de otros usuarios. Esto lo pense para cumplir un rol de "moderador" en caso que algun comentario de libro fuera inapropiado.
 
 - En todo el trabajo intente seguir el consejo de nombres en ingles para las clases y las vistas, url, templates.
-- Las dudas que se fueron presentando durante el trabajo, las trate de solucionar con lo visto en clases y mucho Stack Overflow. De hecho hay un tema puntual que explico en el video, que me costo mucho encontrar porque no estaba haciendo el prompt correcto. Asi que como experiencia, fue muy enriquecedora.
+
+- Las dudas que se fueron presentando durante el trabajo, las trate de solucionar con lo visto en clases y mucho Stack Overflow. De hecho hay un tema puntual que explico en el video, que me costo mucho encontrar porque no estaba haciendo el prompt correcto. Asi que como experiencia, fue muy enriquecedora. Por supuesto que todo es mejorable y seguramente existen maneras mas eficientes de hacerlo, pero desde mi punto de vista el trabajo cumple con lo que quise hacer y me quedo muy satisfecho con la entrega.
 
 - El proyecto se ejecuta en un entorno virtual e incluye el archivo de requerimientos.
+
+- Quedo atento a cualquier modificacion que consideren necesaria.

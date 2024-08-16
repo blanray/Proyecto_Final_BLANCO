@@ -7,7 +7,7 @@ class Book(models.Model):
     name = models.CharField(max_length=50, null=False, blank=False)
     description = models.TextField(max_length=500, null=False, blank=False)
     author = models.CharField(max_length=50, null=False, blank=False)
-    image = models.ImageField(upload_to='portadas', null=True, blank=True)
+    image = models.ImageField(upload_to='portadas', null=False, blank=False)
 
     def __str__(self):
         return f'Book | Id: {self.id} - Nombre: {self.name} - Autor: {self.author}'
